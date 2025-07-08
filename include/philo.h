@@ -10,17 +10,17 @@
 # include <limits.h>
 # include <errno.h>
 # include <sys/stat.h>
-#include "../Libft/libft.h"
+#include "../libft/libft.h"
 
 typedef pthread_mutex_t t_mtx;
 typedef long long		t_time;
 
-typedef struct s_philo
-{
 
+typedef struct s_philo
+{	
 } t_philo;
 
-
+ 
 typedef struct s_table
 {
 	bool	philo_die;
@@ -36,5 +36,7 @@ typedef struct s_table
 } t_table;
 
 int	init_table(t_table **table, int argc, char **argv);
+int	*ft_range(int start, int end);
+int	philo_routine(int argc, char **argv);
 
 #endif

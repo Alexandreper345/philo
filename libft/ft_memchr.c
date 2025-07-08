@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_table.c                                       :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
+/*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:06 by alda-sil         ###   ########.fr       */
+/*   Created: 2024/09/30 16:53:57 by alda-sil          #+#    #+#             */
+/*   Updated: 2024/10/12 16:46:01 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "libft.h"
 
-int	init_table(t_table **table, int argc, char **argv)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-    
+	unsigned char	*temp;
+	size_t			i;
+
+	i = 0;
+	temp = (unsigned char *)s;
+	while (i < n)
+	{
+		if (temp[i] == (unsigned char)c)
+			return (temp + i);
+		i++;
+	}
+	return (NULL);
 }

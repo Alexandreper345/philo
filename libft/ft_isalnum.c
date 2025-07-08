@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_table.c                                       :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:06 by alda-sil         ###   ########.fr       */
+/*   Created: 2024/09/24 14:23:11 by alda-sil          #+#    #+#             */
+/*   Updated: 2024/10/08 13:56:47 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
-
-int	init_table(t_table **table, int argc, char **argv)
+int	ft_isalnum(int c)
 {
-    
+	if ((c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	else
+		return (0);
 }

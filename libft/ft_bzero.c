@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_table.c                                       :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
+/*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:06 by alda-sil         ###   ########.fr       */
+/*   Created: 2024/09/24 15:17:14 by alda-sil          #+#    #+#             */
+/*   Updated: 2024/10/12 17:17:03 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "libft.h"
 
-int	init_table(t_table **table, int argc, char **argv)
+void	ft_bzero(void *s, size_t n)
 {
-    
+	char	*temp;
+	int		i;
+
+	i = 0;
+	temp = s;
+	while (n--)
+	{
+		temp[i] = 0;
+		i++;
+	}
 }

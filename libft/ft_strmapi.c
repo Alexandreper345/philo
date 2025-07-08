@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_table.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:06 by alda-sil         ###   ########.fr       */
+/*   Created: 2024/10/03 19:13:31 by alda-sil          #+#    #+#             */
+/*   Updated: 2024/10/14 15:25:37 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "libft.h"
 
-int	init_table(t_table **table, int argc, char **argv)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-    
+	size_t	i;
+	size_t	len;
+	char	*str;
+
+	i = 0;
+	len = ft_strlen(s);
+	str = (char *)malloc(sizeof(char) * len + 1);
+	if (!str)
+		return (NULL);
+	while (len > i)
+	{
+		str[i] = (*f)(i, s[i]);
+		i++;
+	}
+	str[len] = '\0';
+	return (str);
 }

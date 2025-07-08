@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_table.c                                       :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:06 by alda-sil         ###   ########.fr       */
+/*   Created: 2024/09/29 23:43:20 by alda-sil          #+#    #+#             */
+/*   Updated: 2024/10/07 15:08:12 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
-
-int	init_table(t_table **table, int argc, char **argv)
+int	ft_tolower(int c)
 {
-    
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
 }

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_table.c                                       :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:06 by alda-sil         ###   ########.fr       */
+/*   Created: 2024/10/04 15:14:15 by alda-sil          #+#    #+#             */
+/*   Updated: 2024/10/14 15:24:01 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "libft.h"
 
-int	init_table(t_table **table, int argc, char **argv)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-    
+	unsigned int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		(f)(i, &s[i]);
+		i++;
+	}
 }

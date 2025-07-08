@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_table.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:06 by alda-sil         ###   ########.fr       */
+/*   Created: 2024/09/24 14:50:58 by alda-sil          #+#    #+#             */
+/*   Updated: 2024/10/14 14:18:33 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "libft.h"
 
-int	init_table(t_table **table, int argc, char **argv)
+void	*ft_memset(void *s, int c, size_t n)
 {
-    
+	size_t		i;
+
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = (char)c;
+		i++;
+	}
+	return (s);
 }

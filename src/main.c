@@ -6,11 +6,11 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/06/25 21:43:53 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/07 21:51:26 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/philo.h"
+#include "../include/philo.h"
 
 int	isnumeric(char *value)
 {
@@ -48,11 +48,12 @@ static int	validate_args(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	//t_table	*table;
+	//t_table	**table;
 	
 	if (validate_args(argc, argv))
 		return (EXIT_FAILURE);
-	//else if (init_table(table, argc, argv))
-	//	return (EXIT_FAILURE);
+	else if (philo_routine(argc, argv))
+		return (EXIT_FAILURE);
+
 	return (0);
 }
