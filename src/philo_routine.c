@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/07 22:07:42 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:23:27 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,40 @@
 
 void philo_eating(int argc, char **argv)
 {
-
 	int	*forks;
 	int	i;
-	int	j;
+	int	flag;
 
 	i = 0;
 	forks = 0;
-	forks = ft_range(*forks, ft_atoi(argv[1]));
-
-	while (forks[i])
-	{
-		printf("%d", i);
-		i++;
-	}
+	flag = 0;
+	forks = ft_range(forks, ft_atoi(argv[1]));
 	
-	while (j < ft_atoi(argv[1]))
+	while (i <= ft_atoi(argv[1]))
 	{
-		if (forks[i])
+		if (forks[i] && flag == 0)
 		{
-			printf("pegou um garfo\n");
-			if (forks[(i + 1) % ft_atoi(argv[1])] == 0)
+			printf("pegou um garfo: {%d}\n", forks[i]);
+			if (forks[(i + 1)])
 			{
-				printf("pegou outro garfo\n");
+				printf("pegou outro garfo: {%d} \n",forks[i + 1]);
+				forks[(i + 1)] = 1;
+			}
+			else if (forks[i] == 0 && forks[(i + 1) % ft_atoi(argv[1])] == 0)
+			{
+				printf("pegou outro garfo: {%d} \n", forks[(i + 1) % ft_atoi(argv[1])]);
 				forks[(i + 1) % ft_atoi(argv[1])] = 1;
 			}
-			forks[i] = 1;	
+			forks[i] = 1;
+			flag = 1;
 		}
-		while (forks[i] == 1)
-			i++;
-		j++;
+		i++;
 	}	
 }
 
 void	philo_sleep(int argc, char **argv)
 {
-	printf("dormindo\n");
+	printf("SLEEP\n");
 }
 int	philo_routine(int argc, char **argv)
 {

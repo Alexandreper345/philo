@@ -1,5 +1,5 @@
 NAME = philosophers
-CC = cc
+CC = cc -g
 FLAGS = -Wall -Wextra -Werror
 SRC_FILES = main.c philo_routine.c utils.c
 SRCS = $(addprefix  src/, $(SRC_FILES))
