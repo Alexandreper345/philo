@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/08 21:23:27 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:32:25 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void philo_eating(int argc, char **argv)
 			forks[i] = 1;
 			flag = 1;
 		}
+		else
+			printf("thinking...\n");
 		i++;
 	}	
 }

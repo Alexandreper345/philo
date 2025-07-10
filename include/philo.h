@@ -15,19 +15,30 @@
 typedef pthread_mutex_t t_mtx;
 typedef long long		t_time;
 
+typedef	enum s_status 
+{
+	EATING,
+	THINKING,
+	DEAD,
+	FULL
+} t_status;
 
 typedef struct s_philo
-{	
+{
+	t_status	status;
+	t_time		time_die;
+	t_time		time_eat;
+	t_time		time_sleep;
+	
 } t_philo;
 
- 
 typedef struct s_table
 {
 	bool	philo_die;
-	int		*forks;
-	int		size_philos;
+	int		forks;
+	int		count_philos;
 	int		size_philos_eat;	
-	t_philo	**philos;
+	t_philo	*philos;
 	t_mtx	mutex_print;
 	t_time	time_die;
 	t_time	time_eat;
@@ -36,7 +47,6 @@ typedef struct s_table
 } t_table;
 
 int	init_table(t_table **table, int argc, char **argv);
-int	*ft_range(int start, int end);
 int	philo_routine(int argc, char **argv);
 
 #endif

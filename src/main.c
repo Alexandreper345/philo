@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/07 21:51:26 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:34:45 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	validate_args(int argc, char **argv)
 	int	i;
 
 	i = 0;
-	if (argc < 5 || argc > 6)
+	if (argc < 5 || argc  > 6)
 		return (EXIT_FAILURE);
 	else if (ft_atoi(argv[1]) < 1 || ft_atoi(argv[1]) > 200)
 		return (EXIT_FAILURE);
@@ -48,11 +48,11 @@ static int	validate_args(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	//t_table	**table;
+	t_table	*table;
 	
 	if (validate_args(argc, argv))
 		return (EXIT_FAILURE);
-	else if (philo_routine(argc, argv))
+	else if (init_table(&table, argc, argv))
 		return (EXIT_FAILURE);
 
 	return (0);
