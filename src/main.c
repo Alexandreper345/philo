@@ -6,24 +6,11 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/10 20:34:45 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/15 22:06:47 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-int	isnumeric(char *value)
-{
-	int	i;
-	
-	i = -1;
-	while (value[++i])
-	{
-		if (!ft_isdigit(value[i]))
-			return(1);	
-	}
-	return (0);
-}
  
 static int	validate_args(int argc, char **argv)
 {
@@ -46,14 +33,35 @@ static int	validate_args(int argc, char **argv)
 	return (EXIT_SUCCESS);
 }
 
+static t_philo *init_philos(t_table *table, int i)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)malloc(sizeof(philo));
+	if (!philo)
+		return (NULL);
+	philo->id = i + 1;
+	philo->status = THINKING;
+	philo->time_die = table->time_die;
+	philo->time_eat = table->time_eat;
+	philo->time_sleep = table->time_sleep;
+	pthread_create(&philo->id_thread, NULL, &philo_routine, table);
+	return (philo);
+}	
+
 int	main(int argc, char **argv)
 {
 	t_table	*table;
-	
+	int		i;	
+
+	i = -1;
 	if (validate_args(argc, argv))
 		return (EXIT_FAILURE);
-	else if (init_table(&table, argc, argv))
+	table = init_table(&table, argc, argv);
+	if (!table)
 		return (EXIT_FAILURE);
+	while (++i < table->count_philos)
+		table->philos[i] = init_philos(table, i);
 
 	return (0);
 }

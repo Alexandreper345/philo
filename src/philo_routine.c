@@ -6,57 +6,52 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/10 17:32:25 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/15 21:07:28 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void philo_eating(int argc, char **argv)
+void philo_eating(t_table *table)
 {
-	int	*forks;
 	int	i;
-	int	flag;
-
-	i = 0;
-	forks = 0;
-	flag = 0;
-	forks = ft_range(forks, ft_atoi(argv[1]));
+	t_table *current;
+	int	id;
+	i = 1;
 	
-	while (i <= ft_atoi(argv[1]))
+	id = table->philos->id;
+	while (i <= table->count_philos)
 	{
-		if (forks[i] && flag == 0)
+		if (table->forks == 1)
 		{
-			printf("pegou um garfo: {%d}\n", forks[i]);
-			if (forks[(i + 1)])
-			{
-				printf("pegou outro garfo: {%d} \n",forks[i + 1]);
-				forks[(i + 1)] = 1;
-			}
-			else if (forks[i] == 0 && forks[(i + 1) % ft_atoi(argv[1])] == 0)
-			{
-				printf("pegou outro garfo: {%d} \n", forks[(i + 1) % ft_atoi(argv[1])]);
-				forks[(i + 1) % ft_atoi(argv[1])] = 1;
-			}
-			forks[i] = 1;
-			flag = 1;
+			table->philos->id = id;
+			(table)->forks--;
+			printf("o id {%d} pegou outro garfo\n",table->philos->id);
+			table->size_philos_eat += 1;
+			if (table->size_philos_eat == table->count_philos)
+				return ;
+			table->forks += 2;
+			id++;
 		}
-		else
-			printf("thinking...\n");
+		(table)->forks--;
+		printf("o id {%d} pegou o garfo\n",table->philos->id);
 		i++;
-	}	
+	}
+	
 }
 
-void	philo_sleep(int argc, char **argv)
+void	philo_sleep(void)
 {
 	printf("SLEEP\n");
 }
-int	philo_routine(int argc, char **argv)
+
+void	*philo_routine(void	*ptr)
 {
-	if (ft_atoi(argv[1]) > 1)
-		philo_eating(argc, argv);
+	t_table	*table;
+	
+	table = (t_table *)ptr;
+	if (table->count_philos > 1)
+		philo_eating(table);
 	else
-		philo_sleep(argc, argv);
-	return (0);
-		
+		philo_sleep();		
 }

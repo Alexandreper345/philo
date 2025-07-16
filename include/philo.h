@@ -10,7 +10,6 @@
 # include <limits.h>
 # include <errno.h>
 # include <sys/stat.h>
-#include "../libft/libft.h"
 
 typedef pthread_mutex_t t_mtx;
 typedef long long		t_time;
@@ -25,6 +24,9 @@ typedef	enum s_status
 
 typedef struct s_philo
 {
+	pthread_t	id_thread;
+	int			id;
+	int			eating;
 	t_status	status;
 	t_time		time_die;
 	t_time		time_eat;
@@ -34,19 +36,22 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	bool	philo_die;
-	int		forks;
-	int		count_philos;
-	int		size_philos_eat;	
-	t_philo	*philos;
-	t_mtx	mutex_print;
-	t_time	time_die;
-	t_time	time_eat;
-	t_time	time_sleep;
-	t_time	init_table;
+	bool		philo_die;
+	int			forks;
+	int			count_philos;
+	int			size_philos_eat;
+	t_philo		**philos;
+	t_mtx		mutex;
+	t_time		time_die;
+	t_time		time_eat;
+	t_time		time_sleep;
+	t_time		init_table;
 } t_table;
 
-int	init_table(t_table **table, int argc, char **argv);
-int	philo_routine(int argc, char **argv);
+t_table	*init_table(t_table **table, int argc, char **argv);
+int		isnumeric(char *value);
+int		create_threads(t_table *table, int argc,char **argv);
+int		ft_atoi(const char *nptr);
+void	*philo_routine(void	*ptr);
 
 #endif
