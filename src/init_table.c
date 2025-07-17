@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/15 22:06:50 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:03:23 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_time	get_time(void)
 
 t_table	*init_table(t_table **table, int argc, char **argv)
 {
-	t_philo *philo;
+	t_philo **philo;
 
 	*table = (t_table *)malloc(sizeof(t_table));
 	philo = (t_philo **)malloc(sizeof(t_philo *) * ft_atoi(argv[1]));
@@ -37,7 +37,9 @@ t_table	*init_table(t_table **table, int argc, char **argv)
 	(*table)->time_eat = ft_atoi(argv[3]);
 	(*table)->time_sleep = ft_atoi(argv[4]);
 	(*table)->philos = philo;
+	pthread_mutex_init(&(*table)->print_mutex, NULL);
 	if (argc == 6)
 		(*table)->size_philos_eat = ft_atoi(argv[5]);
 	(*table)->init_table = get_time();
+	return (*table);
 }

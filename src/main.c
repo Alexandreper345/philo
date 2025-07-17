@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/15 22:06:47 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:14:34 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_philo *init_philos(t_table *table, int i)
 {
 	t_philo	*philo;
 
-	philo = (t_philo *)malloc(sizeof(philo));
+	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
 	philo->id = i + 1;
@@ -45,7 +45,8 @@ static t_philo *init_philos(t_table *table, int i)
 	philo->time_die = table->time_die;
 	philo->time_eat = table->time_eat;
 	philo->time_sleep = table->time_sleep;
-	pthread_create(&philo->id_thread, NULL, &philo_routine, table);
+	pthread_mutex_init(&(philo)->fork_mutex, NULL);
+	pthread_create(&philo->id_thread, NULL, &philo_routine, (void *)philo);
 	return (philo);
 }	
 
@@ -62,6 +63,10 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	while (++i < table->count_philos)
 		table->philos[i] = init_philos(table, i);
-
+	
+	i = -1;
+	while (++i < table->count_philos)
+		pthread_join(&table->philos[i], NULL);
+	
 	return (0);
 }
