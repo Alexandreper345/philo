@@ -31,8 +31,8 @@ typedef struct s_philo
 	t_time		time_die;
 	t_time		time_eat;
 	t_time		time_sleep;
-	t_mtx		fork_mutex;
-
+	t_mtx		fork_left;
+	t_mtx		fork_right;
 } t_philo;
 
 typedef struct s_table
@@ -53,5 +53,6 @@ t_table	*init_table(t_table **table, int argc, char **argv);
 int		isnumeric(char *value);
 int		ft_atoi(const char *nptr);
 void	*philo_routine(void	*ptr);
+t_mtx	*create_array_mutex(t_table *table);
 
 #endif

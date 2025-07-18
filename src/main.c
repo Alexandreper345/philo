@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/16 21:14:34 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/17 21:28:41 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	validate_args(int argc, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-static t_philo *init_philos(t_table *table, int i)
+static t_philo *init_philos(t_table *table, int i, t_mtx *array)
 {
 	t_philo	*philo;
 
@@ -45,7 +45,12 @@ static t_philo *init_philos(t_table *table, int i)
 	philo->time_die = table->time_die;
 	philo->time_eat = table->time_eat;
 	philo->time_sleep = table->time_sleep;
-	pthread_mutex_init(&(philo)->fork_mutex, NULL);
+
+	philo->fork_left = array[i];
+	if (i == 0)
+		philo->fork_right = array[table->count_philos - 1];
+	else
+		philo->fork_right = array[i - 1];
 	pthread_create(&philo->id_thread, NULL, &philo_routine, (void *)philo);
 	return (philo);
 }	
@@ -53,6 +58,7 @@ static t_philo *init_philos(t_table *table, int i)
 int	main(int argc, char **argv)
 {
 	t_table	*table;
+	t_mtx	*array;
 	int		i;	
 
 	i = -1;
@@ -61,12 +67,11 @@ int	main(int argc, char **argv)
 	table = init_table(&table, argc, argv);
 	if (!table)
 		return (EXIT_FAILURE);
+	array = create_array_mutex(table);
 	while (++i < table->count_philos)
-		table->philos[i] = init_philos(table, i);
-	
+		table->philos[i] = init_philos(table, i, array);
 	i = -1;
 	while (++i < table->count_philos)
-		pthread_join(&table->philos[i], NULL);
-	
+		pthread_join(table->philos[i]->id_thread, NULL);
 	return (0);
 }

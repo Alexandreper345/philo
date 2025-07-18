@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/16 21:18:42 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/17 21:59:08 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,24 @@
 
 void philo_eating(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->fork_mutex);
-		printf("hello_world {%d}\n", philo->id);
-	pthread_mutex_unlock(&philo->fork_mutex);
+	
+	pthread_mutex_lock(&philo->fork_left);
+	printf("%d pegou o garfo da esquerda\n", philo->id);
+	pthread_mutex_lock(&philo->fork_right);
+	printf("%d pegou o garfo da direita\n", philo->id);
+
+	printf("%d is eating\n", philo->id);
+	usleep(5000000);
+
+	pthread_mutex_unlock(&philo->fork_right);
+	printf("%d soltou o garfo da direita\n", philo->id);
+	pthread_mutex_unlock(&philo->fork_left);
+	printf("%d soltou o garfo da esquerda\n", philo->id);
+	
+	
 }
 	
-void	philo_sleep(void)
+void	philo_sleep(t_philo *philo)
 {
 	printf("SLEEP\n");
 }
@@ -30,7 +42,7 @@ void	*philo_routine(void	*ptr)
 	
 	philo = (t_philo *)ptr;
 	philo_eating(philo);
-	philo_sleep();
+	//philo_sleep(philo);
 
 	return (NULL);
 }
