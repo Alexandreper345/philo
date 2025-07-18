@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/17 21:28:41 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/17 22:04:34 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static t_philo *init_philos(t_table *table, int i, t_mtx *array)
 	philo->time_eat = table->time_eat;
 	philo->time_sleep = table->time_sleep;
 
-	philo->fork_left = array[i];
+	philo->fork_left = &array[i];
 	if (i == 0)
-		philo->fork_right = array[table->count_philos - 1];
+		philo->fork_right = &array[table->count_philos - 1];
 	else
-		philo->fork_right = array[i - 1];
+		philo->fork_right = &array[i - 1];
 	pthread_create(&philo->id_thread, NULL, &philo_routine, (void *)philo);
 	return (philo);
 }	

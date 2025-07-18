@@ -31,8 +31,8 @@ typedef struct s_philo
 	t_time		time_die;
 	t_time		time_eat;
 	t_time		time_sleep;
-	t_mtx		fork_left;
-	t_mtx		fork_right;
+	t_mtx		*fork_left;
+	t_mtx		*fork_right;
 } t_philo;
 
 typedef struct s_table

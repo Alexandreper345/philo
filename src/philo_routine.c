@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/17 21:59:08 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/17 22:05:11 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void philo_eating(t_philo *philo)
 {
 	
-	pthread_mutex_lock(&philo->fork_left);
+	pthread_mutex_lock(philo->fork_left);
 	printf("%d pegou o garfo da esquerda\n", philo->id);
-	pthread_mutex_lock(&philo->fork_right);
+	pthread_mutex_lock(philo->fork_right);
 	printf("%d pegou o garfo da direita\n", philo->id);
 
 	printf("%d is eating\n", philo->id);
 	usleep(5000000);
 
-	pthread_mutex_unlock(&philo->fork_right);
+	pthread_mutex_unlock(philo->fork_right);
 	printf("%d soltou o garfo da direita\n", philo->id);
-	pthread_mutex_unlock(&philo->fork_left);
+	pthread_mutex_unlock(philo->fork_left);
 	printf("%d soltou o garfo da esquerda\n", philo->id);
 	
 	
