@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/16 20:03:23 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:44:16 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_time	get_time(void)
 	t_time	time;
 
 	gettimeofday(&tv, NULL);
-	time = ((tv.tv_sec * 100) + (tv.tv_usec / 1000));
+	time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	return (time);
 }
 
@@ -37,9 +37,8 @@ t_table	*init_table(t_table **table, int argc, char **argv)
 	(*table)->time_eat = ft_atoi(argv[3]);
 	(*table)->time_sleep = ft_atoi(argv[4]);
 	(*table)->philos = philo;
-	pthread_mutex_init(&(*table)->print_mutex, NULL);
 	if (argc == 6)
 		(*table)->size_philos_eat = ft_atoi(argv[5]);
-	(*table)->init_table = get_time();
+	(*table)->start_time = get_time();
 	return (*table);
 }

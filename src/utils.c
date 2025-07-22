@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:53:39 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/15 21:16:58 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:58:48 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,21 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (signal * temp);
+}
+
+void	forced_usleep(size_t time)
+{
+	size_t	start;
+
+	start = get_time();
+	while (get_time() - start < time)
+	{
+		usleep(500);
+	}
+}
+
+void	printed_mutex(t_philo *philo, char *str)
+{
+	pthread_mutex_lock(philo->print_mutex);
+	printf("%lld %d %s\n",get_time() - philo->start_time, philo->id, str);
 }

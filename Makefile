@@ -1,7 +1,7 @@
 NAME = philosophers
 CC = cc -g
 FLAGS = -Wall -Wextra -Werror
-SRC_FILES = main.c init_table.c philo_routine.c mutex.c utils.c
+SRC_FILES = main.c init_table.c philo_routine.c utils_2.c utils.c
 SRCS = $(addprefix  src/, $(SRC_FILES))
 OBJ_SRC = ${SRCS:.c=.o}
 

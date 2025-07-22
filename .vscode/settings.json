@@ -2,6 +2,7 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "philo.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "stat.h": "c"
     }
 }
