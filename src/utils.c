@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:53:39 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/21 21:58:48 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:00:42 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	printed_mutex(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(philo->print_mutex);
 	printf("%lld %d %s\n",get_time() - philo->start_time, philo->id, str);
+	pthread_mutex_unlock(philo->print_mutex);
 }
