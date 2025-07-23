@@ -6,52 +6,63 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/21 21:59:12 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:24:52 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+
+int	left_fork(t_philo *philo)
+{
+	pthread_mutex_lock(philo->fork_left);
+	printed_mutex(philo, "has a left fork");
+	pthread_mutex_lock(philo->fork_right);
+	printed_mutex(philo, "has a right fork");
+	printed_mutex(philo, "eating..");
+	if (forced_usleep(philo->time_eat, philo))
+		return (EXIT_FAILURE);
+	pthread_mutex_unlock(philo->fork_right);
+	printed_mutex(philo, "has a right fork");
+	pthread_mutex_unlock(philo->fork_left);
+	printed_mutex(philo, "has a left fork");
+	return (EXIT_SUCCESS);
+}
+
 void philo_eating(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->fork_left);
-		printf("%lld ms %d pegou o garfo da esquerda\n", get_time() - philo->start_time, philo->id);
-		pthread_mutex_lock(philo->fork_right);
-		printf("%lld ms %d pegou o garfo da direita\n", get_time() - philo->start_time, philo->id);
-		printf("%lld ms %d eating...\n", get_time() - philo->start_time, philo->id);
-		forced_usleep(philo->time_eat);
-		pthread_mutex_unlock(philo->fork_right);
-		printf("%lld ms %d soltou o garfo da direita\n", get_time() - philo->start_time, philo->id);
-		pthread_mutex_unlock(philo->fork_left);
-		printf("%lld ms %d soltou o garfo da esquerda\n", get_time() - philo->start_time, philo->id);
+		if (left_fork(philo))
+			return ;
 	}
 	else
 	{
 		pthread_mutex_lock(philo->fork_right);
-		printf("%lld ms %d pegou o garfo da direita\n", get_time() - philo->start_time, philo->id);	
+		printed_mutex(philo, "has a right fork");
 		pthread_mutex_lock(philo->fork_left);
-		printf("%lld ms %d pegou o garfo da esquerda\n", get_time() - philo->start_time, philo->id);
-		printf("%lld ms %d eating...\n", get_time() - philo->start_time, philo->id);
-		forced_usleep(philo->time_eat);
+		printed_mutex(philo, "has a left fork");
+		printed_mutex(philo, "eating..");
+		if (forced_usleep(philo->time_eat, philo))
+			return ;
 		pthread_mutex_unlock(philo->fork_left);
-		printf("%lld ms %d soltou o garfo da esquerda\n", get_time() - philo->start_time, philo->id);
+		printed_mutex(philo, "has a left fork");
 		pthread_mutex_unlock(philo->fork_right);
-		printf("%lld ms %d soltou o garfo da direita\n", get_time() - philo->start_time, philo->id);
+		printed_mutex(philo, "has a right fork");
 	}
 }
 	
 void	philo_sleep(t_philo *philo)
 {
-	philo_set_state(philo, SLEEP);
-	printf("%lld ms  %d SLEEP...\n", get_time() - philo->start_time, philo->id);
-	forced_usleep(philo->time_sleep);
+	philo_set_state(philo, SLEEP, philo->print_mutex);
+	printed_mutex(philo, "SLEEP...");
+	if (forced_usleep(philo->time_sleep, philo))
+		return ;
 }
 void	philo_thinking(t_philo *philo)
 {
-	philo_set_state(philo, THINKING);
-	printf("%lld ms %d THINKING...\n", get_time() - philo->start_time, philo->id);
+	philo_set_state(philo, THINKING, philo->print_mutex);
+	printed_mutex(philo, "THINKING...");
 }	
 
 void	*philo_routine(void	*ptr)
@@ -65,17 +76,17 @@ void	*philo_routine(void	*ptr)
 	{
 		if (state != DEAD || state != FULL)
 		{
-			mutex
 			philo_eating(philo);
 			philo_sleep(philo);
 			philo_thinking(philo);
 			if (get_time() - philo->last_time_meal > philo->time_die)
 			{
-				philo_set_state(philo, DEAD);
+				printed_mutex(philo, "DEAD...");
+				philo_set_state(philo, DEAD, philo->print_mutex);
 				break;
 			}
 		}
-		usleep(1);
+		usleep(3);
 	}
 	return (NULL);
 }

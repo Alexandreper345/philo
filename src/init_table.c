@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/21 21:44:16 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:23:20 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_table	*init_table(t_table **table, int argc, char **argv)
 	philo = (t_philo **)malloc(sizeof(t_philo *) * ft_atoi(argv[1]));
 	if (!*table || !philo)
 		return (NULL);
+	pthread_mutex_init(&(*table)->print_mutex, NULL);
 	(*table)->forks = ft_atoi(argv[1]);
 	(*table)->count_philos = ft_atoi(argv[1]);
 	(*table)->philo_die = false;

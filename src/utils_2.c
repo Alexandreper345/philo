@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 20:00:37 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/21 21:46:29 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:32:10 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,19 @@ t_mtx	*create_array_mutex(t_table *table)
 	return (array);
 }
 
-t_state	philo_get_state(t_philo *philo)
+t_state	philo_get_state(t_philo *philo, t_mtx *mutex)
 {
-	return (philo->state);
+	t_state	type;
+	
+	pthread_mutex_lock(mutex);
+	type = philo->state;
+	pthread_mutex_unlock(mutex);
+	return (type);
 }
  
-void	philo_set_state(t_philo *philo, t_state type)
+void	philo_set_state(t_philo *philo, t_state type, t_mtx *mutex)
 {
-	if (philo->state == WAITING)
-		philo->state = WAITING;
-	else if (philo->state == SLEEP)
-		philo->state = SLEEP;
-	else if (philo->state == HUNGER)
-		philo->state = HUNGER;
-	else if (philo->state == EATING)
-		philo->state = EATING;
-	else if (philo->state == THINKING)
-		philo->state = THINKING;
-	else if (philo->state == DEAD)
-		philo->state = DEAD;
-	else if (philo->state == FULL)
-		philo->state = FULL;
+	pthread_mutex_lock(mutex);
+	philo->state = type;
+	pthread_mutex_unlock(mutex);
 }

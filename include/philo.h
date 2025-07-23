@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:43:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/21 21:59:16 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:22:20 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_philo
 	t_time		time_sleep;
 	t_mtx		*fork_left;
 	t_mtx		*fork_right;
-	t_mtx		print_mutex;
+	t_mtx		*print_mutex;
 	t_time		start_time;
 	
 } t_philo;
@@ -64,17 +64,18 @@ typedef struct s_table
 	t_time		time_eat;
 	t_time		time_sleep;
 	t_time		start_time;
+	t_mtx		print_mutex;
 } t_table;
 
 t_table	*init_table(t_table **table, int argc, char **argv);
 t_mtx	*create_array_mutex(t_table *table);
 t_time	get_time(void);
-t_state	philo_get_state(t_philo *philo);
+t_state	philo_get_state(t_philo *philo, t_mtx *mutex);
 int		isnumeric(char *value);
 int		ft_atoi(const char *nptr);
-void	philo_set_state(t_philo *philo, t_state type);
+int		forced_usleep(size_t time, t_philo *philo);
+void	philo_set_state(t_philo *philo, t_state type, t_mtx *mutex);
 void	*philo_routine(void	*ptr);
-void 	forced_usleep(size_t time);
 void	printed_mutex(t_philo *philo, char *str);
 
 #endif

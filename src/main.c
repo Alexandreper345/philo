@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/21 21:45:45 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:24:11 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static t_philo *init_philos(t_table *table, int i, t_mtx *array)
 	philo->time_sleep = table->time_sleep;
 	philo->start_time = table->start_time;
 	philo->fork_left = &array[i];
-	pthread_mutex_init(&(*philo).print_mutex, NULL);
+	philo->print_mutex = &table->print_mutex;
 	if (i == 0)
 		philo->fork_right = &array[table->count_philos - 1];
 	else
