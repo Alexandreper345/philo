@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:48:34 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/22 21:18:47 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/23 21:29:38 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 
 void	monitor(t_table *table)
 {
-	int	i;
-	
-	i = -1;
-	while (table->philos[++i]->state != DEAD)
-	if (table->philos[i]->state == DEAD)
+	int i;
+	int	j;
+	t_philo	*philo;
+
+	while (1)
 	{
-		i = -1;
-		while (table->philos[++i])
+		i = 0;
+		while (i < table->count_philos)
 		{
-			printed_mutex(table->philos, "DEAD...");
-			table->philos[i]->state = DEAD;
+			philo = table->philos[i];
+			if (philo->state == DEAD)
+			{
+				i = 0;
+				while (++i < table->count_philos)
+					printed_mutex(table->philos[i], "monitor: DEAD...");
+				table->philo_die = true;	
+				return ;
+			}
+			i++;
 		}
 	}
-		
 }

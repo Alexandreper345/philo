@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:43:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/22 21:22:20 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:09:36 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_philo
 {
 	pthread_t	id_thread;
 	int			id;
+	int			size_philos_eat;
 	t_time		last_time_meal;
 	t_state		state;
 	t_time		time_die;
@@ -77,5 +78,6 @@ int		forced_usleep(size_t time, t_philo *philo);
 void	philo_set_state(t_philo *philo, t_state type, t_mtx *mutex);
 void	*philo_routine(void	*ptr);
 void	printed_mutex(t_philo *philo, char *str);
+void	monitor(t_table *table);
 
 #endif
