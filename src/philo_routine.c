@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/24 15:59:14 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:14:21 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int	left_fork(t_philo *philo)
 {
+	if (simulation_stopped(philo->table))
+        return (EXIT_FAILURE);
 	pthread_mutex_lock(philo->fork_left);
 	printed_mutex(philo, "has a left fork");
 	pthread_mutex_lock(philo->fork_right);
@@ -22,7 +24,11 @@ int	left_fork(t_philo *philo)
 	philo->last_time_meal = get_time();
 	printed_mutex(philo, "eating..");
 	if (forced_usleep(philo->time_eat, philo))
+	{
+		pthread_mutex_unlock(philo->fork_right);
+        pthread_mutex_unlock(philo->fork_left);
 		return (EXIT_FAILURE);
+	}
 	pthread_mutex_unlock(philo->fork_right);
 	pthread_mutex_unlock(philo->fork_left);
 	return (EXIT_SUCCESS);
@@ -37,6 +43,8 @@ int philo_eating(t_philo *philo)
 	}
 	else
 	{
+		if (simulation_stopped(philo->table))
+        return (EXIT_FAILURE);
 		pthread_mutex_lock(philo->fork_right);
 		printed_mutex(philo, "has a right fork");
 		pthread_mutex_lock(philo->fork_left);
@@ -44,7 +52,11 @@ int philo_eating(t_philo *philo)
 		philo->last_time_meal = get_time();
 		printed_mutex(philo, "eating..");
 		if (forced_usleep(philo->time_eat, philo))
+		{
+        	pthread_mutex_unlock(philo->fork_left);
+			pthread_mutex_unlock(philo->fork_right);
 			return (EXIT_FAILURE);
+		}
 		pthread_mutex_unlock(philo->fork_left);
 		pthread_mutex_unlock(philo->fork_right);
 	}
@@ -101,7 +113,7 @@ void	*philo_routine(void	*ptr)
 			break ;
 		philo_thinking(philo);
 		state = philo_get_state(philo, philo->print_mutex);
-		//usleep(1);
+		usleep(1);
 	}
 	return (NULL);
 }
