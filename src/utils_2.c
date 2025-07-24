@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 20:00:37 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/22 20:32:10 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:15:01 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,32 @@ void	philo_set_state(t_philo *philo, t_state type, t_mtx *mutex)
 	pthread_mutex_lock(mutex);
 	philo->state = type;
 	pthread_mutex_unlock(mutex);
+}
+
+
+void	stop_simulation(t_table *table)
+{
+	pthread_mutex_lock(&table->stop_mutex);
+	table->stop_simulation = 1;
+	pthread_mutex_unlock(&table->stop_mutex);
+}
+
+int	simulation_stopped(t_table *table)
+{
+	int	stop;
+	pthread_mutex_lock(&table->stop_mutex);
+	stop = table->stop_simulation;
+	pthread_mutex_unlock(&table->stop_mutex);
+	return (stop);
+}
+
+
+t_time	philo_get_last_meal(t_philo	*philo, t_mtx *mutex)
+{
+	t_time	time;
+	
+	pthread_mutex_lock(mutex);
+	time = philo->last_time_meal;
+	pthread_mutex_unlock(mutex);
+	return (time);
 }

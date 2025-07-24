@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/23 21:31:19 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:00:41 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ static t_philo *init_philos(t_table *table, int i, t_mtx *array)
 	if (!philo)
 		return (NULL);
 	if (table->size_philos_eat != 0)
-		philo->size_philos_eat = table->size_philos_eat; 
+		philo->size_philos_eat = table->size_philos_eat;
+	philo->table = table;	
 	philo->id = i + 1;
 	philo->state = THINKING;
 	philo->time_die = table->time_die;
 	philo->time_eat = table->time_eat;
+	philo->last_time_meal = get_time();
 	philo->time_sleep = table->time_sleep;
 	philo->start_time = table->start_time;
 	philo->fork_left = &array[i];
@@ -54,7 +56,8 @@ static t_philo *init_philos(t_table *table, int i, t_mtx *array)
 		philo->fork_right = &array[table->count_philos - 1];
 	else
 		philo->fork_right = &array[i - 1];
-	pthread_create(&philo->id_thread, NULL, &philo_routine, (void *)philo);
+	if (!simulation_stopped(table))
+		pthread_create(&philo->id_thread, NULL, &philo_routine, (void *)philo);
 	return (philo);
 }	
 
@@ -72,13 +75,11 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	array = create_array_mutex(table);
 	while (++i < table->count_philos)
-	{
-		if (table->philo_die != true)
 			table->philos[i] = init_philos(table, i, array);
-	}
-	monitor(table);
+	pthread_create(&table->monitor, NULL, &monitor_routine, (void *)table);
 	i = -1;
 	while (++i < table->count_philos)
 		pthread_join(table->philos[i]->id_thread, NULL);
+	pthread_join(table->monitor, NULL);
 	return (0);
 }

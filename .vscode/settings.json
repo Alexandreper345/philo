@@ -3,6 +3,7 @@
     "files.associations": {
         "philo.h": "c",
         "cstdlib": "c",
-        "stat.h": "c"
+        "stat.h": "c",
+        "stdbool.h": "c"
     }
 }

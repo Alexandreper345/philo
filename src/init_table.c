@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/22 21:23:20 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:29:06 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ t_table	*init_table(t_table **table, int argc, char **argv)
 	if (!*table || !philo)
 		return (NULL);
 	pthread_mutex_init(&(*table)->print_mutex, NULL);
+	pthread_mutex_init(&(*table)->stop_mutex, NULL);
+	pthread_mutex_init(&(*table)->dead_philo, NULL);
 	(*table)->forks = ft_atoi(argv[1]);
 	(*table)->count_philos = ft_atoi(argv[1]);
-	(*table)->philo_die = false;
+	(*table)->stop_simulation = 0;
 	(*table)->time_die = ft_atoi(argv[2]);
 	(*table)->time_eat = ft_atoi(argv[3]);
 	(*table)->time_sleep = ft_atoi(argv[4]);

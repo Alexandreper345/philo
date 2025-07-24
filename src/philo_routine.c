@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/23 21:28:47 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:59:14 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,21 @@ int	left_fork(t_philo *philo)
 	printed_mutex(philo, "has a left fork");
 	pthread_mutex_lock(philo->fork_right);
 	printed_mutex(philo, "has a right fork");
+	philo->last_time_meal = get_time();
 	printed_mutex(philo, "eating..");
 	if (forced_usleep(philo->time_eat, philo))
 		return (EXIT_FAILURE);
-	philo->last_time_meal = get_time();
 	pthread_mutex_unlock(philo->fork_right);
-	printed_mutex(philo, "has a right fork");
 	pthread_mutex_unlock(philo->fork_left);
-	printed_mutex(philo, "has a left fork");
 	return (EXIT_SUCCESS);
 }
 
-void philo_eating(t_philo *philo)
+int philo_eating(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
 		if (left_fork(philo))
-			return ;
+			return (EXIT_FAILURE);
 	}
 	else
 	{
@@ -43,28 +41,31 @@ void philo_eating(t_philo *philo)
 		printed_mutex(philo, "has a right fork");
 		pthread_mutex_lock(philo->fork_left);
 		printed_mutex(philo, "has a left fork");
+		philo->last_time_meal = get_time();
 		printed_mutex(philo, "eating..");
 		if (forced_usleep(philo->time_eat, philo))
-			return ;
-		philo->last_time_meal = get_time();
+			return (EXIT_FAILURE);
 		pthread_mutex_unlock(philo->fork_left);
-		printed_mutex(philo, "has a left fork");
 		pthread_mutex_unlock(philo->fork_right);
-		printed_mutex(philo, "has a right fork");
 	}
+	return (EXIT_SUCCESS);
 }
 	
-void	philo_sleep(t_philo *philo)
+int	philo_sleep(t_philo *philo)
 {
 	philo_set_state(philo, SLEEP, philo->print_mutex);
 	printed_mutex(philo, "SLEEP...");
 	if (forced_usleep(philo->time_sleep, philo))
-		return ;
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
-void	philo_thinking(t_philo *philo)
+int	philo_thinking(t_philo *philo)
 {
 	philo_set_state(philo, THINKING, philo->print_mutex);
 	printed_mutex(philo, "THINKING...");
+	if (forced_usleep(1, philo))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }	
 
 void	*philo_routine(void	*ptr)
@@ -73,22 +74,34 @@ void	*philo_routine(void	*ptr)
 	philo = (t_philo *)ptr;
 	t_state state;
 	
-	state = philo->state;
-	while (state != DEAD && state != FULL)
+	state = philo_get_state(philo, philo->print_mutex);
+	while (!simulation_stopped(philo->table))
 	{
-		if (state == THINKING)
-			philo_eating(philo);
-		else if(state == EATING)
-			philo_sleep(philo);
-		else if (state == SLEEP)
-			philo_thinking(philo);
-		if (get_time() - philo_get_state(philo,philo->print_mutex) >= philo->time_die)
+		if (get_time() - philo_get_last_meal(philo, philo->print_mutex) >= philo->time_die)
 		{
-			philo_set_state(philo, DEAD, philo->print_mutex);
-			break;
+			pthread_mutex_lock(&philo->table->dead_philo);
+			if (!simulation_stopped(philo->table))
+			{
+				printed_mutex(philo, "DEAD...");
+				philo_set_state(philo, DEAD, philo->print_mutex);
+				stop_simulation(philo->table);
+			}
+			pthread_mutex_unlock(&philo->table->dead_philo);
+			return (NULL);
 		}
-		state = philo->state;
-		usleep(1);
+		if (simulation_stopped(philo->table))
+			break ;
+		if (philo_eating(philo))
+			return (NULL);
+		if (simulation_stopped(philo->table))
+			break ;
+		if (philo_sleep(philo))
+			return (NULL);
+		if (simulation_stopped(philo->table))
+			break ;
+		philo_thinking(philo);
+		state = philo_get_state(philo, philo->print_mutex);
+		//usleep(1);
 	}
 	return (NULL);
 }

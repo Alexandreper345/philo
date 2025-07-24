@@ -6,33 +6,34 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:48:34 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/23 21:29:38 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:01:38 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	monitor(t_table *table)
+void	*monitor_routine(void *arg)
 {
-	int i;
-	int	j;
-	t_philo	*philo;
+	t_table	*table;
+	int	i;
 
-	while (1)
+	table = (t_table *)arg;
+	while (!simulation_stopped(table))
 	{
 		i = 0;
 		while (i < table->count_philos)
 		{
-			philo = table->philos[i];
-			if (philo->state == DEAD)
+			if (table->philos[i]->state == DEAD)
 			{
-				i = 0;
-				while (++i < table->count_philos)
-					printed_mutex(table->philos[i], "monitor: DEAD...");
-				table->philo_die = true;	
-				return ;
+				pthread_mutex_lock(&table->dead_philo);
+				printed_mutex(table->philos[i], "monitor: DEAD...");
+				pthread_mutex_unlock(&table->dead_philo);
+				stop_simulation(table);	
+				return (NULL);
 			}
 			i++;
 		}
+		usleep(1);
 	}
+	return (NULL);
 }
