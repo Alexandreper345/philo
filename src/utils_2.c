@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 20:00:37 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/24 14:15:01 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:42:07 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	stop_simulation(t_table *table)
 int	simulation_stopped(t_table *table)
 {
 	int	stop;
+
 	pthread_mutex_lock(&table->stop_mutex);
 	stop = table->stop_simulation;
 	pthread_mutex_unlock(&table->stop_mutex);

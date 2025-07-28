@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/24 16:14:21 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:03:34 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,8 @@ void	*philo_routine(void	*ptr)
 				stop_simulation(philo->table);
 			}
 			pthread_mutex_unlock(&philo->table->dead_philo);
-			return (NULL);
+			break;
 		}
-		if (simulation_stopped(philo->table))
-			break ;
 		if (philo_eating(philo))
 			return (NULL);
 		if (simulation_stopped(philo->table))
