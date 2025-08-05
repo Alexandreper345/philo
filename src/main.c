@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/24 16:00:41 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:11:14 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static t_philo *init_philos(t_table *table, int i, t_mtx *array)
 		philo->size_philos_eat = table->size_philos_eat;
 	philo->table = table;	
 	philo->id = i + 1;
-	philo->state = THINKING;
 	philo->time_die = table->time_die;
 	philo->time_eat = table->time_eat;
 	philo->last_time_meal = get_time();
 	philo->time_sleep = table->time_sleep;
+	philo->is_full = 0;
 	philo->start_time = table->start_time;
 	philo->fork_left = &array[i];
 	philo->print_mutex = &table->print_mutex;
@@ -76,10 +76,8 @@ int	main(int argc, char **argv)
 	array = create_array_mutex(table);
 	while (++i < table->count_philos)
 			table->philos[i] = init_philos(table, i, array);
-	pthread_create(&table->monitor, NULL, &monitor_routine, (void *)table);
 	i = -1;
 	while (++i < table->count_philos)
 		pthread_join(table->philos[i]->id_thread, NULL);
-	pthread_join(table->monitor, NULL);
 	return (0);
 }

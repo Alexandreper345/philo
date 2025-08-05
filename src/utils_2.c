@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 20:00:37 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/28 19:42:07 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/31 19:12:52 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,6 @@ t_mtx	*create_array_mutex(t_table *table)
 		pthread_mutex_init(&array[i], NULL);
 	return (array);
 }
-
-t_state	philo_get_state(t_philo *philo, t_mtx *mutex)
-{
-	t_state	type;
-	
-	pthread_mutex_lock(mutex);
-	type = philo->state;
-	pthread_mutex_unlock(mutex);
-	return (type);
-}
- 
-void	philo_set_state(t_philo *philo, t_state type, t_mtx *mutex)
-{
-	pthread_mutex_lock(mutex);
-	philo->state = type;
-	pthread_mutex_unlock(mutex);
-}
-
 
 void	stop_simulation(t_table *table)
 {

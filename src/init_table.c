@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/24 15:29:06 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:10:55 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_table	*init_table(t_table **table, int argc, char **argv)
 	(*table)->time_eat = ft_atoi(argv[3]);
 	(*table)->time_sleep = ft_atoi(argv[4]);
 	(*table)->philos = philo;
+	(*table)->philos_full = 0;
 	if (argc == 6)
 		(*table)->size_philos_eat = ft_atoi(argv[5]);
 	(*table)->start_time = get_time();
