@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:43:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/06 19:21:55 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:55:44 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void		*philo_routine(void	*ptr);
 void		*one_philos(void *ptr);
 void		printed_mutex(t_philo *philo, char *str);
 int			philos_full(t_philo *philo);
+void		*monitor_routine(void *arg);
 
 #endif

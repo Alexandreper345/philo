@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/06 19:25:28 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:55:22 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv)
 	t_table	*table;
 	t_mtx	*array;
 	int		i;
+	pthread_t monitor;
 
 	i = -1;
 	if (validate_args(argc, argv))
@@ -66,9 +67,11 @@ int	main(int argc, char **argv)
 	array = create_array_mutex(table);
 	while (++i < table->count_philos)
 		table->philos[i] = init_philos(table, i, array);
+	pthread_create(&monitor, NULL, monitor_routine, (void *)table);
 	i = -1;
 	while (++i < table->count_philos)
 		pthread_join(table->philos[i]->id_thread, NULL);
+	pthread_join(monitor, NULL);
 	clean(table, array);
 	return (0);
 }

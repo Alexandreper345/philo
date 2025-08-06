@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:59:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/06 20:04:32 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:51:11 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	left_fork(t_philo *philo)
 	printed_mutex(philo, "has taken a fork");
 	pthread_mutex_lock(philo->fork_right);
 	printed_mutex(philo, "has taken a fork");
+	pthread_mutex_lock(philo->print_mutex);
 	philo->last_time_meal = get_time();
+	pthread_mutex_unlock(philo->print_mutex);
 	printed_mutex(philo, "is eating");
 	if (forced_usleep(philo->time_eat, philo))
 	{
@@ -44,7 +46,9 @@ int	philo_eating(t_philo *philo)
 		printed_mutex(philo, "has taken a fork");
 		pthread_mutex_lock(philo->fork_left);
 		printed_mutex(philo, "has taken a fork");
+		pthread_mutex_lock(philo->print_mutex);
 		philo->last_time_meal = get_time();
+		pthread_mutex_unlock(philo->print_mutex);
 		printed_mutex(philo, "is eating");
 		if (forced_usleep(philo->time_eat, philo))
 		{
@@ -60,8 +64,6 @@ int	philo_eating(t_philo *philo)
 
 int	philo_sleep(t_philo *philo)
 {
-	if (is_dead(philo))
-		return (EXIT_FAILURE);
 	printed_mutex(philo, "is sleeping");
 	if (forced_usleep(philo->time_sleep, philo))
 		return (EXIT_FAILURE);
@@ -70,8 +72,6 @@ int	philo_sleep(t_philo *philo)
 
 int	philo_thinking(t_philo *philo)
 {
-	if (is_dead(philo))
-		return (EXIT_FAILURE);
 	printed_mutex(philo, "is thinking");
 	if (forced_usleep(1, philo))
 		return (EXIT_FAILURE);
