@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:53:39 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/31 23:11:41 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/05 18:46:57 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	forced_usleep(size_t time, t_philo *philo)
 	start = get_time();
 	while (get_time() - start < time)
 	{
-	    if (simulation_stopped(philo->table))
+	    if (simulation_stopped(philo->table, philo->stop_mutex))
         	return (EXIT_FAILURE);
 		usleep(500);
 	}
@@ -74,7 +74,7 @@ int	forced_usleep(size_t time, t_philo *philo)
 void	printed_mutex(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(philo->print_mutex);
-	if (simulation_stopped(philo->table))
+	if (simulation_stopped(philo->table, philo->stop_mutex))
 	{
 		pthread_mutex_unlock(philo->print_mutex);
         return ;

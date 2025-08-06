@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:43:31 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/31 20:10:08 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/05 18:43:41 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_philo
 	t_mtx		*fork_left;
 	t_mtx		*fork_right;
 	t_mtx		*print_mutex;
+	t_mtx		*stop_mutex;
+	t_mtx		*dead_philo;
 	t_time		start_time;
 	t_table		*table;
 	
@@ -62,18 +64,19 @@ typedef struct s_table
 	t_mtx		print_mutex;
 } t_table;
 
-t_table	*init_table(t_table **table, int argc, char **argv);
-t_mtx	*create_array_mutex(t_table *table);
-t_time	get_time(void);
-t_time	philo_get_last_meal(t_philo	*philo, t_mtx *mutex);
-int		isnumeric(char *value);
-int		ft_atoi(const char *nptr);
-void	stop_simulation(t_table *table);
-int		forced_usleep(size_t time, t_philo *philo);
-int		simulation_stopped(t_table *table);
-int		is_dead(t_philo *philo);
-void	*philo_routine(void	*ptr);
-void	printed_mutex(t_philo *philo, char *str);
-int		philos_full(t_philo *philo);
+t_table		*init_table(t_table **table, int argc, char **argv);
+t_mtx		*create_array_mutex(t_table *table);
+t_time		get_time(void);
+t_time		philo_get_last_meal(t_philo	*philo, t_mtx *mutex);
+t_philo 	*init_philos(t_table *table, int i, t_mtx *array);
+int			isnumeric(char *value);
+int			ft_atoi(const char *nptr);
+void		stop_simulation(t_table *table, t_mtx *stop_mutex);
+int			forced_usleep(size_t time, t_philo *philo);
+int			simulation_stopped(t_table *table, t_mtx *stop_mutex);
+int			is_dead(t_philo *philo);
+void		*philo_routine(void	*ptr);
+void		printed_mutex(t_philo *philo, char *str);
+int			philos_full(t_philo *philo);
 
 #endif

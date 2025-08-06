@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/31 20:11:14 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/05 21:29:32 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,22 @@ static int	validate_args(int argc, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-static t_philo *init_philos(t_table *table, int i, t_mtx *array)
+void	clean(t_table *table, t_mtx *array)
 {
-	t_philo	*philo;
+	int	i;
 
-	philo = (t_philo *)malloc(sizeof(t_philo));
-	if (!philo)
-		return (NULL);
-	if (table->size_philos_eat != 0)
-		philo->size_philos_eat = table->size_philos_eat;
-	philo->table = table;	
-	philo->id = i + 1;
-	philo->time_die = table->time_die;
-	philo->time_eat = table->time_eat;
-	philo->last_time_meal = get_time();
-	philo->time_sleep = table->time_sleep;
-	philo->is_full = 0;
-	philo->start_time = table->start_time;
-	philo->fork_left = &array[i];
-	philo->print_mutex = &table->print_mutex;
-	if (i == 0)
-		philo->fork_right = &array[table->count_philos - 1];
-	else
-		philo->fork_right = &array[i - 1];
-	if (!simulation_stopped(table))
-		pthread_create(&philo->id_thread, NULL, &philo_routine, (void *)philo);
-	return (philo);
-}	
+	i = -1;
+	while (++i < table->count_philos)
+	{
+		pthread_mutex_destroy(table->philos[i]->fork_right);	
+		pthread_mutex_destroy(table->philos[i]->fork_left);
+	}
+	pthread_mutex_destroy(&table->dead_philo);
+	pthread_mutex_destroy(&table->stop_mutex);
+	pthread_mutex_destroy(&table->print_mutex);
+	pthread_mutex_destroy(array);
+
+}
 
 int	main(int argc, char **argv)
 {
@@ -79,5 +68,6 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < table->count_philos)
 		pthread_join(table->philos[i]->id_thread, NULL);
+	clean(table, array);
 	return (0);
 }

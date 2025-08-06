@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 20:00:37 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/31 19:12:52 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/05 18:43:04 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ t_mtx	*create_array_mutex(t_table *table)
 	return (array);
 }
 
-void	stop_simulation(t_table *table)
+void	stop_simulation(t_table *table, t_mtx *stop_mutex)
 {
-	pthread_mutex_lock(&table->stop_mutex);
+	pthread_mutex_lock(stop_mutex);
 	table->stop_simulation = 1;
-	pthread_mutex_unlock(&table->stop_mutex);
+	pthread_mutex_unlock(stop_mutex);
 }
 
-int	simulation_stopped(t_table *table)
+int	simulation_stopped(t_table *table, t_mtx *stop_mutex)
 {
 	int	stop;
 
-	pthread_mutex_lock(&table->stop_mutex);
+	pthread_mutex_lock(stop_mutex);
 	stop = table->stop_simulation;
-	pthread_mutex_unlock(&table->stop_mutex);
+	pthread_mutex_unlock(stop_mutex);
 	return (stop);
 }
 
