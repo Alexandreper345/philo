@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 20:00:37 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/05 18:43:04 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:36:32 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_mtx	*create_array_mutex(t_table *table)
 	int		i;
 
 	i = -1;
-	array =	(t_mtx *)malloc(sizeof(t_mtx) * table->count_philos);
+	array = (t_mtx *)malloc(sizeof(t_mtx) * table->count_philos);
 	if (!array)
 		return (NULL);
 	while (++i < table->count_philos)
@@ -43,11 +43,10 @@ int	simulation_stopped(t_table *table, t_mtx *stop_mutex)
 	return (stop);
 }
 
-
 t_time	philo_get_last_meal(t_philo	*philo, t_mtx *mutex)
 {
 	t_time	time;
-	
+
 	pthread_mutex_lock(mutex);
 	time = philo->last_time_meal;
 	pthread_mutex_unlock(mutex);

@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:53:55 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/07/31 20:10:55 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:24:05 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_time	get_time(void)
 {
-	struct timeval tv;
-	t_time	time;
+	struct timeval	tv;
+	t_time			time;
 
 	gettimeofday(&tv, NULL);
 	time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
@@ -24,7 +24,7 @@ t_time	get_time(void)
 
 t_table	*init_table(t_table **table, int argc, char **argv)
 {
-	t_philo **philo;
+	t_philo	**philo;
 
 	*table = (t_table *)malloc(sizeof(t_table));
 	philo = (t_philo **)malloc(sizeof(t_philo *) * ft_atoi(argv[1]));
@@ -43,6 +43,8 @@ t_table	*init_table(t_table **table, int argc, char **argv)
 	(*table)->philos_full = 0;
 	if (argc == 6)
 		(*table)->size_philos_eat = ft_atoi(argv[5]);
+	else
+		(*table)->size_philos_eat = 0;
 	(*table)->start_time = get_time();
 	return (*table);
 }

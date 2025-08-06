@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:07:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/05 18:47:02 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:37:12 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	check_philo(t_table *table, t_philo *philo, int i, t_mtx *array)
 {
 	if (table->size_philos_eat != 0)
 		philo->size_philos_eat = table->size_philos_eat;
+	else
+		philo->size_philos_eat = 0;
 	if (i == 0)
 		philo->fork_right = &array[table->count_philos - 1];
 	else
@@ -32,7 +34,7 @@ int	check_philo(t_table *table, t_philo *philo, int i, t_mtx *array)
 	return (0);
 }
 
-t_philo *init_philos(t_table *table, int i, t_mtx *array)
+t_philo	*init_philos(t_table *table, int i, t_mtx *array)
 {
 	t_philo	*philo;
 
@@ -40,7 +42,7 @@ t_philo *init_philos(t_table *table, int i, t_mtx *array)
 	if (!philo)
 		return (NULL);
 	mutex(table, philo);
-	philo->table = table;	
+	philo->table = table;
 	philo->id = i + 1;
 	philo->time_die = table->time_die;
 	philo->time_eat = table->time_eat;
@@ -49,7 +51,9 @@ t_philo *init_philos(t_table *table, int i, t_mtx *array)
 	philo->is_full = 0;
 	philo->start_time = table->start_time;
 	philo->fork_left = &array[i];
-	if (check_philo(table, philo, i, array))
+	if (table->count_philos == 1)
+		pthread_create(&philo->id_thread, NULL, &one_philos, (void *)philo);
+	else if (check_philo(table, philo, i, array))
 		pthread_create(&philo->id_thread, NULL, &philo_routine, (void *)philo);
 	return (philo);
 }

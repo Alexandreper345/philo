@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:53:39 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/05 18:46:57 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:53:42 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	ft_isdigit(int c)
 int	isnumeric(char *value)
 {
 	int	i;
-	
+
 	i = -1;
 	while (value[++i])
 	{
 		if (!ft_isdigit(value[i]))
-			return(1);	
+			return (1);
 	}
 	return (0);
 }
@@ -64,8 +64,10 @@ int	forced_usleep(size_t time, t_philo *philo)
 	start = get_time();
 	while (get_time() - start < time)
 	{
-	    if (simulation_stopped(philo->table, philo->stop_mutex))
-        	return (EXIT_FAILURE);
+		if (is_dead(philo))
+			return (EXIT_FAILURE);
+		if (simulation_stopped(philo->table, philo->stop_mutex))
+			return (EXIT_FAILURE);
 		usleep(500);
 	}
 	return (EXIT_SUCCESS);
@@ -77,8 +79,8 @@ void	printed_mutex(t_philo *philo, char *str)
 	if (simulation_stopped(philo->table, philo->stop_mutex))
 	{
 		pthread_mutex_unlock(philo->print_mutex);
-        return ;
+		return ;
 	}
-	printf("%lld %d %s\n",get_time() - philo->start_time, philo->id, str);
+	printf("%lld %d %s\n", get_time() - philo->start_time, philo->id, str);
 	pthread_mutex_unlock(philo->print_mutex);
 }
