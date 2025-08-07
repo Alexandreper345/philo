@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:48:34 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/06 21:01:23 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:03:08 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	*monitor_routine(void *arg)
 	t_philo	*philo;
 	t_time	last_meal;
 
-	*table = (t_table *)arg;
+	table = (t_table *)arg;
 	while (!simulation_stopped(table, &table->stop_mutex))
 	{
 		i = 0;
