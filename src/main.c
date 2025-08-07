@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:01:30 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/06 20:55:22 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:00:08 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	clean(t_table *table, t_mtx *array)
 
 int	main(int argc, char **argv)
 {
-	t_table	*table;
-	t_mtx	*array;
-	int		i;
-	pthread_t monitor;
+	t_table		*table;
+	t_mtx		*array;
+	int			i;
+	pthread_t	monitor;
 
 	i = -1;
 	if (validate_args(argc, argv))

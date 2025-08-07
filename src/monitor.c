@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:48:34 by alda-sil          #+#    #+#             */
-/*   Updated: 2025/08/06 20:58:28 by alda-sil         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:01:23 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ void	*one_philos(void *ptr)
 
 void	*monitor_routine(void *arg)
 {
-	t_table	*table = (t_table *)arg;
+	t_table	*table;
 	int		i;
-	t_philo *philo;
+	t_philo	*philo;
 	t_time	last_meal;
 
+	*table = (t_table *)arg;
 	while (!simulation_stopped(table, &table->stop_mutex))
 	{
 		i = 0;
@@ -83,16 +84,15 @@ void	*monitor_routine(void *arg)
 		{
 			philo = table->philos[i];
 			last_meal = philo_get_last_meal(philo, philo->print_mutex);
-
 			if ((get_time() - last_meal) >= philo->time_die)
 			{
-				printed_mutex(philo, "died");;
+				printed_mutex(philo, "died");
 				stop_simulation(table, &table->stop_mutex);
 				return (NULL);
 			}
 			i++;
 		}
-		usleep(500); // Evita uso excessivo de CPU
+		usleep(500);
 	}
 	return (NULL);
 }
